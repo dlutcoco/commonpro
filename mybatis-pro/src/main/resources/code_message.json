@@ -1,0 +1,12 @@
+[
+  {
+    "id": "Invalid_Parameter",
+    "code": "4001",
+    "message": "无效参数"
+  },
+  {
+    "id": "Server_Inner_Exception",
+    "code": "5001",
+    "message": "服务内部错误"
+  }
+]

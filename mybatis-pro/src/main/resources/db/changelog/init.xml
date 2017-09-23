@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="init" author="coco">
+        <sql>
+            DROP TABLE IF EXISTS `ps_library`;
+            CREATE TABLE `ps_library` (
+            `lib_id` varchar(255) NOT NULL,
+            `creator_id` varchar(255) DEFAULT NULL,
+            `creator_name` varchar(255) DEFAULT '',
+            `lib_name` varchar(255) DEFAULT '',
+            `lib_type` int(11) NOT NULL,
+            `pcount` int(11) DEFAULT '0',
+            `remark` varchar(255) DEFAULT '',
+            `create_time` bigint(20) DEFAULT '0',
+            `org_id` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`lib_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            DROP TABLE IF EXISTS `ps_person`;
+            CREATE TABLE `ps_person` (
+            `person_id` varchar(255) NOT NULL,
+            `lib_id` varchar(255) NOT NULL,
+            `birthday` bigint(20) DEFAULT '0',
+            `gender` varchar(255) DEFAULT NULL,
+            `card_type` varchar(255) DEFAULT NULL,
+            `id_card` varchar(255) DEFAULT NULL,
+            `census_register` varchar(255) DEFAULT '',
+            `name` varchar(255) DEFAULT '',
+            `nation` varchar(255) DEFAULT NULL,
+            `remark` varchar(255) DEFAULT '',
+            `create_time` bigint(20) DEFAULT '0',
+            PRIMARY KEY (`person_id`),
+            KEY `cs_fk_ps_person` (`lib_id`),
+            CONSTRAINT `cs_fk_ps_person` FOREIGN KEY (`lib_id`) REFERENCES `ps_library` (`lib_id`) ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            DROP TABLE IF EXISTS `ps_photo`;
+            CREATE TABLE `ps_photo` (
+            `photo_id` varchar(255) NOT NULL,
+            `person_id` varchar(255) NOT NULL,
+            `url` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`photo_id`),
+            KEY `cs_fk_ps_photo` (`person_id`),
+            CONSTRAINT `cs_fk_ps_photo` FOREIGN KEY (`person_id`) REFERENCES `ps_person` (`person_id`) ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
